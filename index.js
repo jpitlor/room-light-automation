@@ -42,6 +42,15 @@ pi.on('change', async (channel) => {
         return;
     }
 
+    const time = Date.now()
+    if (
+        ([0, 6].includes(time.getDay()) && (time.getHours() < 10 || time.getHours() > 22)) ||
+        ([1, 2, 3, 4, 5].includes(time.getDay()) && (time.getHours() < 7 || time.getHours() > 22))
+    ) {
+        // It is too early or late to turn lights on
+        return;
+    }
+
     await connection.setDevicePowerState(fan, channel === ENTER_ROOM_PIN ? 'on' : 'off', Channel.LIGHT);
 });
 
