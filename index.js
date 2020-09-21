@@ -33,6 +33,8 @@ function logError(e) {
     }
 }
 
+
+let timeoutId;
 pi.on('change', async (channel) => {
     logger.info(`Detected a motion in channel ${channel}!`);
     logger.info(`Person just ${channel === ENTER_ROOM_PIN ? 'entered' : 'exited'} the room`);
@@ -42,16 +44,23 @@ pi.on('change', async (channel) => {
         return;
     }
 
-    const time = Date.now()
+    const time = new Date(Date.now());
     if (
         ([0, 6].includes(time.getDay()) && (time.getHours() < 10 || time.getHours() > 22)) ||
         ([1, 2, 3, 4, 5].includes(time.getDay()) && (time.getHours() < 7 || time.getHours() > 22))
     ) {
         // It is too early or late to turn lights on
+        logger.info('It is sleeping hours! Ignoring sensor.');
+        logger.info(`Turning the light off`);
+        await connection.setDevicePowerState(fan, 'off', Channel.LIGHT);
         return;
     }
 
-    await connection.setDevicePowerState(fan, channel === ENTER_ROOM_PIN ? 'on' : 'off', Channel.LIGHT);
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+        logger.info(`Turning the light ${channel === ENTER_ROOM_PIN ? 'on' : 'off'}`);
+        await connection.setDevicePowerState(fan, channel === ENTER_ROOM_PIN ? 'on' : 'off', Channel.LIGHT);
+    }, 250);
 });
 
 pi.setup(ENTER_ROOM_PIN, pi.DIR_IN, pi.EDGE_RISING, logError);
