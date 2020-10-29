@@ -1,7 +1,7 @@
 # Room Light Automation
 
-I had a problem: I wanted an easier way to turn my lights on and off.
-The only hard requirement to the solution is that I had to be able to control my lights (and preferrably my fan) from both my door and my bed
+I had a problem: I wanted an easier way to turn my lights on and off. The only hard requirement to the solution is that I had to be able to control my lights and fan
+from both my door and my bed. The solution? Overengineer a custom, but cheaper, version of Samsung SmartThings
 
 ### The Path to a Solution
 
