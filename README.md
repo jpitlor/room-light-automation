@@ -1,3 +1,7 @@
+# Archive Note
+
+I ultimately decided to use HomeAssistant which can do all of this purely through a couple lines of YAML. However, I'd like to keep this project archived (instead of deleted) because it was a fun project, and was ultimately working.
+
 # Room Light Automation
 
 I had a problem: I wanted an easier way to turn my lights on and off. The only hard requirement to the solution is that I had to be able to control my lights and fan
